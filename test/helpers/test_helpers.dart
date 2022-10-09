@@ -31,6 +31,8 @@ HttpService getAndRegisterHttpService() {
 MockNavigationService getAndRegisterNavigationService() {
   _removeRegistrationIfExists<NavigationService>();
   final service = MockNavigationService();
+  when(service.back(result: anyNamed('result'), id: anyNamed('id')))
+      .thenReturn(false);
   locator.registerSingleton<NavigationService>(service);
   return service;
 }

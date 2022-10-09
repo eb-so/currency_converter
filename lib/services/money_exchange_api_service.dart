@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:currency_converter/app/app.locator.dart';
 import 'package:currency_converter/app/app.logger.dart';
 import 'package:currency_converter/exceptions/http_exception.dart';
@@ -61,7 +59,7 @@ class MoneyExchangeApiServiceImp implements MoneyExchangeApiService {
     return (response['rates'] as Map<String, double>)
         .entries
         .where(
-          // Rolls out the non monitored currencies
+          // Rollout the non monitored currencies
           (e) => currencies.contains(e.key),
         )
         .map((e) => Currency(abbrivation: e.key, rate: e.value))

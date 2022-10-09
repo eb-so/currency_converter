@@ -5,7 +5,6 @@ import 'package:currency_converter/ui/views/landing/landing_view.dart';
 import '../services/http_service.dart';
 import '../services/money_exchange_api_service.dart';
 import '../services/shared_preferences_service.dart';
-// @stacked-import
 
 @StackedApp(
   routes: [
@@ -18,7 +17,6 @@ import '../services/shared_preferences_service.dart';
       classType: MoneyExchangeApiServiceImp,
       asType: MoneyExchangeApiService,
     ),
-    // presolve
     Presolve(
       classType: SharedPreferencesService,
       presolveUsing: SharedPreferencesService.getInstance,
