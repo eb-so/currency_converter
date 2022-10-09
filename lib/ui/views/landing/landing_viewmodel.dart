@@ -26,6 +26,7 @@ class LandingViewModel extends BaseViewModel {
           _moneyExchangeService.getCurrenciesExchangeRates(
               _sharedPreferencesService.myCurrencies!),
         );
+        _log.v(currencies);
       } catch (error) {
         _log.e(error);
         setError(error);
@@ -34,6 +35,8 @@ class LandingViewModel extends BaseViewModel {
   }
 
   void removeCurrency(Currency currency) {
+    _log.v('currency: $currency');
+
     _sharedPreferencesService.removeCurrency = currency.abbrivation;
     currencies.remove(currency);
   }

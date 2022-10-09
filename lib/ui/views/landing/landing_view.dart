@@ -1,3 +1,4 @@
+import 'package:currency_converter/ui/common/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'landing_viewmodel.dart';
@@ -11,9 +12,12 @@ class LandingView extends StatelessWidget {
       onModelReady: (model) => model.loadMyMonitoredCurrencies(),
       viewModelBuilder: () => LandingViewModel(),
       builder: (context, model, _) => Scaffold(
+        appBar: AppBar(
+          title: const Text(ksYourCurrencies),
+        ),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: Container(
-          padding: EdgeInsets.only(left: 25.0, right: 25.0),
+        body: Column(
+          children: const [],
         ),
       ),
     );

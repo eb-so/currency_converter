@@ -14,7 +14,7 @@ class CurrencyPickerView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         body: Container(
-          padding: EdgeInsets.only(left: 25.0, right: 25.0),
+          padding: const EdgeInsets.only(left: 25.0, right: 25.0),
         ),
       ),
     );

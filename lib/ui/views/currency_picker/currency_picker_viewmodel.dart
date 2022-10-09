@@ -32,13 +32,16 @@ class CurrencyPickerViewModel extends BaseViewModel {
     }
   }
 
-  bool _filterOutAlreadyAddedValues(Currency e) {
+  bool _filterOutAlreadyAddedValues(Currency currency) {
     if (_sharedPreferencesService.myCurrencies.isEmpty) return true;
 
-    return !_sharedPreferencesService.myCurrencies!.contains(e.abbrivation);
+    return !_sharedPreferencesService.myCurrencies!
+        .contains(currency.abbrivation);
   }
 
   Future<void> chooseCurrencyAndPop(String currencyAbbrivation) async {
+    _log.v('currencyAbbrivation: $currencyAbbrivation');
+
     _navigationService.back(result: currencyAbbrivation);
   }
 }
