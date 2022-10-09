@@ -32,4 +32,9 @@ class LandingViewModel extends BaseViewModel {
       }
     }
   }
+
+  void removeCurrency(Currency currency) {
+    _sharedPreferencesService.removeCurrency = currency.abbrivation;
+    currencies.remove(currency);
+  }
 }

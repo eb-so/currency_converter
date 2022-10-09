@@ -1,10 +1,9 @@
-import 'package:currency_converter/models/currency.dart';
-import 'package:currency_converter/services/money_exchange_api_service.dart';
 import 'package:currency_converter/ui/views/landing/landing_viewmodel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:currency_converter/app/app.locator.dart';
 import 'package:mockito/mockito.dart';
 
+import '../helpers/constants.dart';
 import '../helpers/test_helpers.dart';
 
 void main() {
@@ -27,21 +26,22 @@ void main() {
       test(
           'When the user monitored currencies is not empty, Should fetch those currencies latest rates',
           () async {
-        getAndRegisterSharedPreferencesService(myCurrencies: ['USD']);
+        getAndRegisterSharedPreferencesService(
+            myCurrencies: [kUsd.abbrivation]);
         final moneyExchangeApiService = getAndRegisterMoneyExchangeApiService();
 
         final model = LandingViewModel();
         await model.loadMyMonitoredCurrencies();
 
-        verify(moneyExchangeApiService.getCurrenciesExchangeRates(['USD']));
+        verify(moneyExchangeApiService
+            .getCurrenciesExchangeRates([kUsd.abbrivation]));
       });
       test('When called successfully, Should set the currencies field',
           () async {
-        getAndRegisterSharedPreferencesService(myCurrencies: ['USD']);
+        getAndRegisterSharedPreferencesService(
+            myCurrencies: [kUsd.abbrivation]);
 
-        getAndRegisterMoneyExchangeApiService(currencies: [
-          const Currency(abbrivation: 'USD'),
-        ]);
+        getAndRegisterMoneyExchangeApiService(currencies: [kUsd]);
 
         final model = LandingViewModel();
         await model.loadMyMonitoredCurrencies();
@@ -49,16 +49,37 @@ void main() {
       });
       test('When any error happen, Should set the model hasError to true',
           () async {
-        getAndRegisterSharedPreferencesService(myCurrencies: ['USD']);
+        getAndRegisterSharedPreferencesService(
+            myCurrencies: [kUsd.abbrivation]);
         final moneyExchangeApiService = getAndRegisterMoneyExchangeApiService();
 
-        when(moneyExchangeApiService.getCurrenciesExchangeRates(['USD']))
+        when(moneyExchangeApiService
+                .getCurrenciesExchangeRates([kUsd.abbrivation]))
             .thenThrow(Exception('Network error'));
 
         final model = LandingViewModel();
 
         await model.loadMyMonitoredCurrencies();
         expect(model.hasError, isTrue);
+      });
+    });
+    group('removeCurrency -', () {
+      test('When called, Should remove a currency from the local storage', () {
+        final sharedPreferencesService =
+            getAndRegisterSharedPreferencesService();
+
+        final model = LandingViewModel();
+        model.removeCurrency(kUsd);
+
+        verify(sharedPreferencesService.removeCurrency = kUsd.abbrivation);
+      });
+      test('When called, Should remove a currency from the [currencies] field',
+          () {
+        final model = LandingViewModel();
+        model.currencies = [kUsd, kAed];
+
+        model.removeCurrency(kUsd);
+        expect(model.currencies.length, 1);
       });
     });
   });

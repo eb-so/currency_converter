@@ -1,3 +1,5 @@
+import 'package:currency_converter/models/currency.dart';
+
 const kCurrenciesSampleJson = {
   "AED": "United Arab Emirates Dirham",
   "AFN": "Afghan Afghani",
@@ -175,3 +177,5 @@ const kMinimizedCurrenciesSampleJson = {
   "AFN": "Afghan Afghani",
   "ALL": "Albanian Lek",
 };
+const kUsd = Currency(abbrivation: 'USD');
+const kAed = Currency(abbrivation: 'AED');
