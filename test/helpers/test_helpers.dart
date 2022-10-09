@@ -1,4 +1,6 @@
+import 'package:currency_converter/models/currency.dart';
 import 'package:currency_converter/services/http_service.dart';
+import 'package:currency_converter/services/shared_preferences_service.dart';
 import 'package:mockito/annotations.dart';
 import 'package:currency_converter/app/app.locator.dart';
 import 'package:mockito/mockito.dart';
@@ -10,11 +12,13 @@ import 'test_helpers.mocks.dart';
   MockSpec<NavigationService>(),
   MockSpec<MoneyExchangeApiService>(),
   MockSpec<HttpService>(),
+  MockSpec<SharedPreferencesService>(),
 ])
 void registerServices() {
   getAndRegisterNavigationService();
   getAndRegisterMoneyExchangeApiService();
   getAndRegisterHttpService();
+  getAndRegisterSharedPreferencesService();
 }
 
 HttpService getAndRegisterHttpService() {
@@ -31,10 +35,25 @@ MockNavigationService getAndRegisterNavigationService() {
   return service;
 }
 
-MockMoneyExchangeApiService getAndRegisterMoneyExchangeApiService() {
+MockMoneyExchangeApiService getAndRegisterMoneyExchangeApiService({
+  List<Currency> currencies = const [],
+}) {
   _removeRegistrationIfExists<MoneyExchangeApiService>();
   final service = MockMoneyExchangeApiService();
+  when(service.getCurrenciesNamesAndAbbreviations())
+      .thenAnswer((realInvocation) => Future.value(currencies));
+  when(service.getCurrenciesExchangeRates(any))
+      .thenAnswer((realInvocation) => Future.value(currencies));
   locator.registerSingleton<MoneyExchangeApiService>(service);
+  return service;
+}
+
+SharedPreferencesService getAndRegisterSharedPreferencesService(
+    {List<String> myCurrencies = const []}) {
+  _removeRegistrationIfExists<SharedPreferencesService>();
+  final service = MockSharedPreferencesService();
+  when(service.myCurrencies).thenReturn(myCurrencies);
+  locator.registerSingleton<SharedPreferencesService>(service);
   return service;
 }
 

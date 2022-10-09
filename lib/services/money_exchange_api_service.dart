@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:currency_converter/app/app.locator.dart';
 import 'package:currency_converter/app/app.logger.dart';
 import 'package:currency_converter/exceptions/http_exception.dart';
@@ -9,8 +11,9 @@ import '../constants/api_constants.dart';
 typedef Json = Map<String, dynamic>;
 
 abstract class MoneyExchangeApiService {
-  Future<List<Currency>> getCurrencies();
-  Future<double> getExchangeRateForCurrency(Currency currency);
+  Future<List<Currency>> getCurrenciesNamesAndAbbreviations();
+  Future<List<Currency>> getCurrenciesExchangeRates(
+      List<String> currenciesAbbrivations);
 }
 
 class MoneyExchangeApiServiceImp implements MoneyExchangeApiService {
@@ -18,12 +21,10 @@ class MoneyExchangeApiServiceImp implements MoneyExchangeApiService {
   final _httpService = locator<HttpService>();
 
   @override
-  Future<List<Currency>> getCurrencies() async {
+  Future<List<Currency>> getCurrenciesNamesAndAbbreviations() async {
     _log.v('');
 
-    final response = await _httpService.get(
-      '${kOpenExchangeRatesBaseEndPoint}currencies.json',
-    );
+    final response = await _httpService.get(kGetAllCurrenciesEndPoint);
 
     if (response.statusCode == 200) {
       final result = (response.data! as Json)
@@ -34,21 +35,36 @@ class MoneyExchangeApiServiceImp implements MoneyExchangeApiService {
       return result;
     }
 
-    throw HttpException('getCurrencies :${response.statusMessage}');
+    throw HttpException(
+        'getCurrenciesNamesAndAbbreviations :${response.statusMessage}');
   }
 
   @override
-  Future<double> getExchangeRateForCurrency(Currency currency) async {
-    _log.v('currency: $currency');
+  Future<List<Currency>> getCurrenciesExchangeRates(
+      List<String> currenciesAbbrivations) async {
+    _log.v('currenciesAbbrivations: $currenciesAbbrivations');
 
-    final response = await _httpService.get<double>(
-      '${kOpenExchangeRatesBaseEndPoint}latest.json',
+    final response = await _httpService.get(
+      kGetCurrencyLatestRateEndPoint,
       queryParameters: {'app_id': kAppId},
     );
 
-    if (response.statusCode == 200) return response.data!;
+    if (response.statusCode == 200) {
+      return _addRatesToCurrencies(currenciesAbbrivations, response.data!);
+    }
 
     throw HttpException(
-        'getExchangeRateForCurrency :${response.statusMessage}');
+        'getCurrenciesExchangeRates :${response.statusMessage}');
+  }
+
+  List<Currency> _addRatesToCurrencies(List<String> currencies, Json response) {
+    return (response['rates'] as Map<String, double>)
+        .entries
+        .where(
+          // Rolls out the non monitored currencies
+          (e) => currencies.contains(e.key),
+        )
+        .map((e) => Currency(abbrivation: e.key, rate: e.value))
+        .toList();
   }
 }

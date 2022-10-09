@@ -9,6 +9,8 @@ import 'package:currency_converter/models/currency.dart' as _i7;
 import 'package:currency_converter/services/http_service.dart' as _i8;
 import 'package:currency_converter/services/money_exchange_api_service.dart'
     as _i6;
+import 'package:currency_converter/services/shared_preferences_service.dart'
+    as _i9;
 import 'package:dio/dio.dart' as _i2;
 import 'package:flutter/material.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
@@ -356,22 +358,24 @@ class MockMoneyExchangeApiService extends _i1.Mock
   }
 
   @override
-  _i5.Future<List<_i7.Currency>> getCurrencies() => (super.noSuchMethod(
+  _i5.Future<List<_i7.Currency>> getCurrenciesNamesAndAbbreviations() =>
+      (super.noSuchMethod(
         Invocation.method(
-          #getCurrencies,
+          #getCurrenciesNamesAndAbbreviations,
           [],
         ),
         returnValue: _i5.Future<List<_i7.Currency>>.value(<_i7.Currency>[]),
       ) as _i5.Future<List<_i7.Currency>>);
   @override
-  _i5.Future<double> getExchangeRateForCurrency(_i7.Currency? currency) =>
+  _i5.Future<List<_i7.Currency>> getCurrenciesExchangeRates(
+          List<String>? currenciesAbbrivations) =>
       (super.noSuchMethod(
         Invocation.method(
-          #getExchangeRateForCurrency,
-          [currency],
+          #getCurrenciesExchangeRates,
+          [currenciesAbbrivations],
         ),
-        returnValue: _i5.Future<double>.value(0.0),
-      ) as _i5.Future<double>);
+        returnValue: _i5.Future<List<_i7.Currency>>.value(<_i7.Currency>[]),
+      ) as _i5.Future<List<_i7.Currency>>);
 }
 
 /// A class which mocks [HttpService].
@@ -525,4 +529,46 @@ class MockHttpService extends _i1.Mock implements _i8.HttpService {
           ),
         )),
       ) as _i5.Future<_i2.Response<T>>);
+}
+
+/// A class which mocks [SharedPreferencesService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSharedPreferencesService extends _i1.Mock
+    implements _i9.SharedPreferencesService {
+  MockSharedPreferencesService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  set saveNewCurrency(String? currencyAbbreviation) => super.noSuchMethod(
+        Invocation.setter(
+          #saveNewCurrency,
+          currencyAbbreviation,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set removeCurrency(String? currencyAbbreviation) => super.noSuchMethod(
+        Invocation.setter(
+          #removeCurrency,
+          currencyAbbreviation,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void saveToDisk(
+    String? key,
+    dynamic content,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #saveToDisk,
+          [
+            key,
+            content,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
 }

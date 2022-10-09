@@ -11,6 +11,7 @@ import 'package:stacked_services/src/navigation/navigation_service.dart';
 
 import '../services/http_service.dart';
 import '../services/money_exchange_api_service.dart';
+import '../services/shared_preferences_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -25,4 +26,6 @@ Future<void> setupLocator(
   locator.registerLazySingleton(() => HttpService());
   locator.registerLazySingleton<MoneyExchangeApiService>(
       () => MoneyExchangeApiServiceImp());
+  final sharedPreferencesService = await SharedPreferencesService.getInstance();
+  locator.registerSingleton(sharedPreferencesService);
 }

@@ -27,7 +27,7 @@ class StackedRouter extends _i1.RouterBase {
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.LandingView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => _i2.LandingView(),
+        builder: (context) => const _i2.LandingView(),
         settings: data,
       );
     }

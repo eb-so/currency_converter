@@ -30,7 +30,8 @@ void main() {
             ));
 
         final moneyExchangeApiService = MoneyExchangeApiServiceImp();
-        final result = await moneyExchangeApiService.getCurrencies();
+        final result =
+            await moneyExchangeApiService.getCurrenciesNamesAndAbbreviations();
 
         expect(result, [
           const Currency(name: 'United Arab Dirham', abbrivation: 'AED'),
@@ -53,7 +54,9 @@ void main() {
 
         final moneyExchangeApiService = MoneyExchangeApiServiceImp();
 
-        expect(() async => await moneyExchangeApiService.getCurrencies(),
+        expect(
+            () async => await moneyExchangeApiService
+                .getCurrenciesNamesAndAbbreviations(),
             throwsA(isA<HttpException>()));
       });
     });
