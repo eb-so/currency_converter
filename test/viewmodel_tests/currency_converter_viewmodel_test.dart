@@ -22,12 +22,12 @@ void main() {
         expect(model.quantity, 1);
         expect(model.result, 1.605);
       });
-      test('When change quantity to 2, Should rerun the method again with', () {
+      test('When change quantity to 2, Should rerun the method again', () {
         final model = CurrencyConverterViewModel(kAed);
         model.convertToUSD();
         expect(model.result, 1.605);
 
-        model.setData({QuantityValueKey: 2});
+        model.setData({QuantityValueKey: '2'});
 
         expect(model.result, 1.605 * 2);
       });

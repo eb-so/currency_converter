@@ -33,7 +33,7 @@ void main() {
         final model = CurrencyPickerViewModel();
         await model.chooseCurrencyAndPop(kUsd.abbrivation);
 
-        verify(navigationService.back(result: kUsd.abbrivation));
+        verify(navigationService.back());
       });
     });
   });
