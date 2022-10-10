@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../common/app_strings.dart';
-import '../landing/widgets/currency_card.dart';
+import '../../common/widgets/currency_card.dart';
 import 'currency_picker_viewmodel.dart';
 
 class CurrencyPickerView extends StatelessWidget {

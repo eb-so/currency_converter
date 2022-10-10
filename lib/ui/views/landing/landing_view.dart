@@ -1,8 +1,8 @@
 import 'package:currency_converter/ui/common/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import '../../common/widgets/currency_card.dart';
 import 'landing_viewmodel.dart';
-import 'widgets/currency_card.dart';
 
 class LandingView extends StatelessWidget {
   const LandingView({Key? key}) : super(key: key);

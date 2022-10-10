@@ -1,10 +1,11 @@
 class FormValidators {
   static String? validateUnsignInteger(String? value) {
-    if (value is! int) {
-      return "Value isn't integer";
-    }
+    if (value == null) return 'value cannot be null';
 
-    if (value as int < 1) {
+    final toInt = int.tryParse(value);
+    if (toInt == null) return "Value isn't integer";
+
+    if (toInt < 1) {
       return 'Value should be greater than 0';
     }
 

@@ -22,8 +22,9 @@ class CurrencyCard extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -35,7 +36,10 @@ class CurrencyCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: IconButton(
                       onPressed: onRemove,
-                      icon: const Icon(Icons.remove_circle_outline_rounded)),
+                      icon: Icon(
+                        Icons.remove_circle_outline_rounded,
+                        color: Theme.of(context).errorColor,
+                      )),
                 )
             ],
           ),

@@ -3,7 +3,7 @@ import 'package:currency_converter/models/currency.dart';
 import 'package:currency_converter/ui/views/currency_converter/currency_converter_view.form.dart';
 import 'package:stacked/stacked.dart';
 
-class CurrencyConverterViewModel extends BaseViewModel with FormStateHelper {
+class CurrencyConverterViewModel extends FormViewModel {
   final Currency currency;
   CurrencyConverterViewModel(this.currency);
 
@@ -21,7 +21,11 @@ class CurrencyConverterViewModel extends BaseViewModel with FormStateHelper {
 
   @override
   void setFormStatus() {
-    quantity = formValueMap[QuantityValueKey];
-    convertToUSD();
+    final newQuantity = int.tryParse(formValueMap[QuantityValueKey]) ?? 1;
+
+    if (newQuantity > 0) {
+      quantity = newQuantity;
+      convertToUSD();
+    }
   }
 }
