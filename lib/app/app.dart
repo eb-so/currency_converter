@@ -1,3 +1,4 @@
+import 'package:currency_converter/ui/views/currency_converter/currency_converter_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:currency_converter/ui/views/landing/landing_view.dart';
@@ -11,6 +12,7 @@ import '../ui/views/currency_picker/currency_picker_view.dart';
   routes: [
     MaterialRoute(page: LandingView),
     MaterialRoute(page: CurrencyPickerView),
+    MaterialRoute(page: CurrencyConverterView),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),

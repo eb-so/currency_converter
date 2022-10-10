@@ -20,16 +20,17 @@ class LandingViewModel extends BaseViewModel {
   List<Currency> currencies = [];
 
   FutureOr<void> loadMyMonitoredCurrencies() async {
-    _log.v('');
+    final monitoredCurrencies = _sharedPreferencesService.myCurrencies;
+    _log.v('monitoredCurrencies: $monitoredCurrencies');
 
     // When there is no monitored currencies we don't need to call the api
-    if (_sharedPreferencesService.myCurrencies.isNotNullNorEmpty) {
+    if (monitoredCurrencies.isNotNullNorEmpty) {
       try {
         currencies = await runBusyFuture(
-          _moneyExchangeService.getCurrenciesExchangeRates(
-              _sharedPreferencesService.myCurrencies!),
+          _moneyExchangeService
+              .getCurrenciesExchangeRates(monitoredCurrencies!),
         );
-        _log.v(currencies);
+        _log.v('currencies: $currencies');
       } catch (error) {
         _log.e(error);
         setError(error);
@@ -51,5 +52,10 @@ class LandingViewModel extends BaseViewModel {
     await loadMyMonitoredCurrencies();
   }
 
-  void navigateToDetailsPage() {}
+  void navigateToConverterView(Currency currency) {
+    _navigationService.navigateTo(
+      Routes.currencyConverterView,
+      arguments: CurrencyConverterViewArguments(currency: currency),
+    );
+  }
 }

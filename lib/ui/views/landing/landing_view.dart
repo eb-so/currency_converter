@@ -27,7 +27,7 @@ class LandingView extends StatelessWidget {
             return CurrencyCard(
               showRemoveIcon: true,
               onRemove: () => model.removeCurrency(currency),
-              onPressed: model.navigateToDetailsPage,
+              onPressed: () => model.navigateToConverterView(currency),
               currencyAbbrivation: currency.abbrivation,
               rate: currency.rate.toString(),
             );

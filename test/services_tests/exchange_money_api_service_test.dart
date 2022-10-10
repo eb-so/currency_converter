@@ -15,7 +15,7 @@ void main() {
     setUp(() => registerServices());
     tearDown(() => locator.reset());
 
-    group('getCurrencies -', () {
+    group('getCurrenciesNamesAndAbbreviations -', () {
       test(
           'When the call succeeded, Should deserialize the incoming data to a List of [Currency] objects',
           () async {

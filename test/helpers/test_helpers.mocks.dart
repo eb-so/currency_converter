@@ -544,7 +544,7 @@ class MockSharedPreferencesService extends _i1.Mock
   set saveNewCurrencyAbbrivation(String? currencyAbbreviation) =>
       super.noSuchMethod(
         Invocation.setter(
-          #saveNewCurrency,
+          #saveNewCurrencyAbbrivation,
           currencyAbbreviation,
         ),
         returnValueForMissingStub: null,
@@ -554,21 +554,6 @@ class MockSharedPreferencesService extends _i1.Mock
         Invocation.setter(
           #removeCurrency,
           currencyAbbreviation,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  void saveToDisk(
-    String? key,
-    dynamic content,
-  ) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #saveToDisk,
-          [
-            key,
-            content,
-          ],
         ),
         returnValueForMissingStub: null,
       );

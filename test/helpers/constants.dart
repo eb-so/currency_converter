@@ -177,5 +177,5 @@ const kMinimizedCurrenciesSampleJson = {
   "AFN": "Afghan Afghani",
   "ALL": "Albanian Lek",
 };
-const kUsd = Currency(abbrivation: 'USD');
-const kAed = Currency(abbrivation: 'AED');
+const kUsd = Currency(abbrivation: 'USD', rate: 1);
+const kAed = Currency(abbrivation: 'AED', rate: 1.5);
