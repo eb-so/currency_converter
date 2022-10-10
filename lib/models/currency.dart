@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class Currency extends Equatable {
   final String? name;
   final String abbrivation;
-  final double? rate;
+  final num? rate;
   const Currency({
     required this.abbrivation,
     this.name,

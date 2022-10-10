@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import '../../common/app_strings.dart';
+import '../landing/widgets/currency_card.dart';
 import 'currency_picker_viewmodel.dart';
 
 class CurrencyPickerView extends StatelessWidget {
@@ -12,9 +14,21 @@ class CurrencyPickerView extends StatelessWidget {
       onModelReady: (model) => model.loadAllCurrenciesExceptUserAlreadyAdded(),
       viewModelBuilder: () => CurrencyPickerViewModel(),
       builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          title: const Text(ksPickNewCurrency),
+        ),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: Container(
-          padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+        body: ListView.builder(
+          itemCount: model.currencies.length,
+          itemBuilder: (context, index) {
+            final currencies = model.currencies[index];
+            return CurrencyCard(
+              onPressed: () =>
+                  model.chooseCurrencyAndPop(currencies.abbrivation),
+              currencyAbbrivation: currencies.abbrivation,
+              rate: currencies.name,
+            );
+          },
         ),
       ),
     );

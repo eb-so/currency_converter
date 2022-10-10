@@ -2,6 +2,7 @@ import 'package:currency_converter/ui/common/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'landing_viewmodel.dart';
+import 'widgets/currency_card.dart';
 
 class LandingView extends StatelessWidget {
   const LandingView({Key? key}) : super(key: key);
@@ -15,9 +16,22 @@ class LandingView extends StatelessWidget {
         appBar: AppBar(
           title: const Text(ksYourCurrencies),
         ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: model.addNewCurrency, child: const Icon(Icons.add)),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: Column(
-          children: const [],
+        body: ListView.builder(
+          itemCount: model.currencies.length,
+          itemBuilder: (context, index) {
+            final currency = model.currencies[index];
+
+            return CurrencyCard(
+              showRemoveIcon: true,
+              onRemove: () => model.removeCurrency(currency),
+              onPressed: model.navigateToDetailsPage,
+              currencyAbbrivation: currency.abbrivation,
+              rate: currency.rate.toString(),
+            );
+          },
         ),
       ),
     );

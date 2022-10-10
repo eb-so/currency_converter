@@ -27,7 +27,7 @@ class MoneyExchangeApiServiceImp implements MoneyExchangeApiService {
     if (response.statusCode == 200) {
       final result = (response.data! as Json)
           .entries
-          .map<Currency>((e) => Currency(name: e.value, abbrivation: e.key))
+          .map<Currency>((e) => Currency(abbrivation: e.key, name: e.value))
           .toList();
 
       return result;
@@ -56,13 +56,13 @@ class MoneyExchangeApiServiceImp implements MoneyExchangeApiService {
   }
 
   List<Currency> _addRatesToCurrencies(List<String> currencies, Json response) {
-    return (response['rates'] as Map<String, double>)
+    return (response['rates'] as Json)
         .entries
         .where(
           // Rollout the non monitored currencies
           (e) => currencies.contains(e.key),
         )
-        .map((e) => Currency(abbrivation: e.key, rate: e.value))
+        .map<Currency>((e) => Currency(abbrivation: e.key, rate: e.value))
         .toList();
   }
 }

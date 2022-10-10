@@ -39,9 +39,10 @@ class CurrencyPickerViewModel extends BaseViewModel {
         .contains(currency.abbrivation);
   }
 
-  Future<void> chooseCurrencyAndPop(String currencyAbbrivation) async {
-    _log.v('currencyAbbrivation: $currencyAbbrivation');
+  Future<void> chooseCurrencyAndPop(String abbrivation) async {
+    _log.v('abbrivation: $abbrivation');
 
-    _navigationService.back(result: currencyAbbrivation);
+    _sharedPreferencesService.saveNewCurrencyAbbrivation = abbrivation;
+    _navigationService.back();
   }
 }

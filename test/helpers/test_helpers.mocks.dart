@@ -541,7 +541,8 @@ class MockSharedPreferencesService extends _i1.Mock
   }
 
   @override
-  set saveNewCurrency(String? currencyAbbreviation) => super.noSuchMethod(
+  set saveNewCurrencyAbbrivation(String? currencyAbbreviation) =>
+      super.noSuchMethod(
         Invocation.setter(
           #saveNewCurrency,
           currencyAbbreviation,

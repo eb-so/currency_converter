@@ -33,6 +33,7 @@ MockNavigationService getAndRegisterNavigationService() {
   final service = MockNavigationService();
   when(service.back(result: anyNamed('result'), id: anyNamed('id')))
       .thenReturn(false);
+  when(service.navigateTo(any)).thenAnswer((_) => Future.value());
   locator.registerSingleton<NavigationService>(service);
   return service;
 }

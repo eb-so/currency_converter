@@ -21,7 +21,8 @@ class SharedPreferencesService {
   List<String>? get myCurrencies =>
       _preferences.getStringList(_MonitoredCurrenciesKey);
 
-  set saveNewCurrency(String currencyAbbreviation) {
+  set saveNewCurrencyAbbrivation(String currencyAbbreviation) {
+    _log.v('currencyAbbreviation: $currencyAbbreviation');
     // When this is the first value to add
     if (myCurrencies == null) {
       _preferences
@@ -33,33 +34,15 @@ class SharedPreferencesService {
   }
 
   set removeCurrency(String currencyAbbreviation) {
-    if (myCurrencies == null || myCurrencies!.isEmpty) return;
+    _log.v('currencyAbbreviation: $currencyAbbreviation');
+    final tempList = myCurrencies;
 
-    if (myCurrencies!.contains(currencyAbbreviation)) {
-      _preferences
-          .setStringList(_MonitoredCurrenciesKey, [currencyAbbreviation]);
+    if (tempList == null || tempList.isEmpty) return;
+
+    if (tempList.remove(currencyAbbreviation)) {
+      _preferences.setStringList(_MonitoredCurrenciesKey, tempList);
     } else {
       // If the value is not found do nothing
-    }
-  }
-
-  void saveToDisk(String key, dynamic content) {
-    _log.v('key:$key value:$content');
-
-    if (content is String) {
-      _preferences.setString(key, content);
-    }
-    if (content is bool) {
-      _preferences.setBool(key, content);
-    }
-    if (content is int) {
-      _preferences.setInt(key, content);
-    }
-    if (content is double) {
-      _preferences.setDouble(key, content);
-    }
-    if (content is List<String>) {
-      _preferences.setStringList(key, content);
     }
   }
 }

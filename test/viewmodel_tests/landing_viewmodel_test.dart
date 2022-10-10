@@ -1,3 +1,4 @@
+import 'package:currency_converter/app/app.router.dart';
 import 'package:currency_converter/ui/views/landing/landing_viewmodel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:currency_converter/app/app.locator.dart';
@@ -80,6 +81,16 @@ void main() {
 
         model.removeCurrency(kUsd);
         expect(model.currencies.length, 1);
+      });
+    });
+
+    group('AddNewCurrency -', () {
+      test('When called, Should navigate to [currencyPickerView]', () {
+        final navigationService = getAndRegisterNavigationService();
+
+        final model = LandingViewModel();
+        model.addNewCurrency();
+        verify(navigationService.navigateTo(Routes.currencyPickerView));
       });
     });
   });
