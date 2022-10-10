@@ -45,4 +45,8 @@ class SharedPreferencesService {
       // If the value is not found do nothing
     }
   }
+
+  void clearMemory() {
+    _preferences.clear();
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:currency_converter/ui/common/widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../common/app_strings.dart';
@@ -18,18 +19,21 @@ class CurrencyPickerView extends StatelessWidget {
           title: const Text(ksPickNewCurrency),
         ),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: ListView.builder(
-          itemCount: model.currencies.length,
-          itemBuilder: (context, index) {
-            final currencies = model.currencies[index];
-            return CurrencyCard(
-              onPressed: () =>
-                  model.chooseCurrencyAndPop(currencies.abbrivation),
-              currencyAbbrivation: currencies.abbrivation,
-              rate: currencies.name,
-            );
-          },
-        ),
+        body: model.isBusy
+            ? const BusyWidget()
+            : ListView.builder(
+                itemCount: model.currencies.length,
+                itemBuilder: (context, index) {
+                  final currencies = model.currencies[index];
+                  return CurrencyCard(
+                    key: Key('CurrencyCard$index'),
+                    onPressed: () =>
+                        model.chooseCurrencyAndPop(currencies.abbrivation),
+                    currencyAbbrivation: currencies.abbrivation,
+                    rate: currencies.name,
+                  );
+                },
+              ),
       ),
     );
   }

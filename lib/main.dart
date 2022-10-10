@@ -1,3 +1,4 @@
+import 'package:currency_converter/services/shared_preferences_service.dart';
 import 'package:currency_converter/ui/common/app_strings.dart';
 import 'package:currency_converter/ui/common/theme.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import 'app/app.router.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
 

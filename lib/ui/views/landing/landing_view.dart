@@ -1,4 +1,5 @@
 import 'package:currency_converter/ui/common/app_strings.dart';
+import 'package:currency_converter/ui/common/widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../common/widgets/currency_card.dart';
@@ -19,20 +20,22 @@ class LandingView extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
             onPressed: model.addNewCurrency, child: const Icon(Icons.add)),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: ListView.builder(
-          itemCount: model.currencies.length,
-          itemBuilder: (context, index) {
-            final currency = model.currencies[index];
+        body: model.isBusy
+            ? const BusyWidget()
+            : ListView.builder(
+                itemCount: model.currencies.length,
+                itemBuilder: (context, index) {
+                  final currency = model.currencies[index];
 
-            return CurrencyCard(
-              showRemoveIcon: true,
-              onRemove: () => model.removeCurrency(currency),
-              onPressed: () => model.navigateToConverterView(currency),
-              currencyAbbrivation: currency.abbrivation,
-              rate: currency.rate.toString(),
-            );
-          },
-        ),
+                  return CurrencyCard(
+                    showRemoveIcon: true,
+                    onRemove: () => model.removeCurrency(currency),
+                    onPressed: () => model.navigateToConverterView(currency),
+                    currencyAbbrivation: currency.abbrivation,
+                    rate: currency.rate.toString(),
+                  );
+                },
+              ),
       ),
     );
   }
